@@ -8,21 +8,25 @@
  * 
 */
 
-void bubble_sort(int *array, size_t size) {
-    for (size_t i = 0; i < size - 1; i++) {
-        for (size_t j = 0; j < size - i - 1; j++) {
-            if (array[j] > array[j + 1]) {
+void bubble_sort(int *array, size_t size)
+{
+	int tmp;
+	size_t i, j;
 
-                int temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
+	if (array == NULL || size == 0)
+		return;
 
-                printf("Array after swapping: ");
-                for (size_t k = 0; k < size; k++) {
-                    printf("%d ", array[k]);
-                }
-                printf("\n");
-            }
-        }
-    }
+	for (i = 0; i < size; i++)
+	{
+		for (j = 0; j < size - 1; j++)
+		{
+			if (array[j] > array[j + 1])
+			{
+				tmp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = tmp;
+				print_array(array, size);
+			}
+		}
+	}
 }
