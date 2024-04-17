@@ -1,9 +1,9 @@
 #include "sort.h"
 /**
- * swap_backward -swap two nodes right left position
- * @c: list
- *
- **/
+* swap_backward -swap two nodes right left position
+* @c: list
+*
+**/
 void swap_backward(listint_t *c)
 {
 	listint_t *tmp, *head;
@@ -30,10 +30,10 @@ void swap_backward(listint_t *c)
 	}
 }
 /**
- * swap_forward -swap two nodes left rigth position
- * @c: list
- *
- **/
+* swap_forward -swap two nodes left rigth position
+* @c: list
+*
+**/
 void swap_forward(listint_t *c)
 {
 	listint_t *tmp, *head;
@@ -66,10 +66,10 @@ void swap_forward(listint_t *c)
 	swap_backward(c->prev);
 }
 /**
- * insertion_sort_list -sort a doubly linked list with insert algorithm
- * @list: list
- *
- **/
+* insertion_sort_list -sort a doubly linked list with insert algorithm
+* @list: list
+*
+**/
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *c;
