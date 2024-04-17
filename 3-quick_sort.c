@@ -1,65 +1,76 @@
-#include <stdio.h>
+#include "sort.h"
 
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+/**
+* partition - Lomutu partition scheme for quicksort algorithm
+* @a: Array to sort
+* @l: lowest index of array
+* @h: highest index of array
+* Return: index of pivot
+*/
+
+int partition(int *a, int l, int h)
+{
+	int p, i, j, t;
+	static int size, k;
+
+	if (k == 0)
+		size = h + 1, k++;
+	p = a[h];
+	i = l;
+	for (j = l; j < h; j++)
+	{
+		if (a[j] <= p)
+		{
+			if (i != j)
+			{
+				t = a[i];
+				a[i] = a[j];
+				a[j] = t;
+				print_array(a, size);
+			}
+			i++;
+		}
+	}
+	if (i != h)
+	{
+		t = a[i];
+		a[i] = a[h];
+		a[h] = t;
+		print_array(a, size);
+	}
+
+	return (i);
 }
 
-int partition(int *array, int low, int high) {
-    int pivot = array[high];
-    int i = low - 1;
-    int j;
+/**
+* qs - Quicksort recurssive function
+* @a: array to sort
+* @l: lowest index
+* @h: highest index
+*/
 
-    for (j = low; j <= high - 1; j++) {
-        if (array[j] < pivot) {
-            i++;
-            swap(&array[i], &array[j]);
-            printf("Array after swapping: ");
-            for (int k = low; k <= high; k++) {
-                printf("%d ", array[k]);
-            }
-            printf("\n");
-        }
-    }
-    swap(&array[i + 1], &array[high]);
-    printf("Array after swapping: ");
-    for (int k = low; k <= high; k++) {
-        printf("%d ", array[k]);
-    }
-    printf("\n");
-    return (i + 1);
+void qs(int *a, int l, int h)
+{
+	int p;
+
+	if (l < h)
+	{
+		p = partition(a, l, h);
+		qs(a, l, p - 1);
+		qs(a, p + 1, h);
+	}
 }
 
-void quick_sort_helper(int *array, int low, int high) {
-    if (low < high) {
-        int pi = partition(array, low, high);
-        quick_sort_helper(array, low, pi - 1);
-        quick_sort_helper(array, pi + 1, high);
-    }
-}
 
-void quick_sort(int *array, size_t size) {
-    quick_sort_helper(array, 0, size - 1);
-}
+/**
+* quick_sort - sorts array using quicksort algorithm
+* @array: Array to sort
+* @size: Size of array to sort
+*/
 
-int main() {
-    int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    size_t size = sizeof(arr) / sizeof(arr[0]);
-
-    printf("Original array: ");
-    for (size_t i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    quick_sort(arr, size);
-
-    printf("Sorted array: ");
-    for (size_t i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    return 0;
+void quick_sort(int *array, size_t size)
+{
+	if (array == NULL)
+		return;
+	qs(array, 0, size - 1);
 }
