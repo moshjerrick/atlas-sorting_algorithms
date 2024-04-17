@@ -1,5 +1,6 @@
 #ifndef SORTING_ALG
 #define SORTING_ALG
+#include <stddef.h>
 
 typedef struct listint_s
 {
