@@ -1,76 +1,101 @@
 #include "sort.h"
 
 /**
-* partition - Lomutu partition scheme for quicksort algorithm
-* @a: Array to sort
-* @l: lowest index of array
-* @h: highest index of array
-* Return: index of pivot
-*/
-
-int partition(int *a, int l, int h)
-{
-	int p, i, j, t;
-	static int size, k;
-
-	if (k == 0)
-		size = h + 1, k++;
-	p = a[h];
-	i = l;
-	for (j = l; j < h; j++)
-	{
-		if (a[j] <= p)
-		{
-			if (i != j)
-			{
-				t = a[i];
-				a[i] = a[j];
-				a[j] = t;
-				print_array(a, size);
-			}
-			i++;
-		}
-	}
-	if (i != h)
-	{
-		t = a[i];
-		a[i] = a[h];
-		a[h] = t;
-		print_array(a, size);
-	}
-
-	return (i);
-}
-
-/**
-* qs - Quicksort recurssive function
-* @a: array to sort
-* @l: lowest index
-* @h: highest index
-*/
-
-void qs(int *a, int l, int h)
-{
-	int p;
-
-	if (l < h)
-	{
-		p = partition(a, l, h);
-		qs(a, l, p - 1);
-		qs(a, p + 1, h);
-	}
-}
-
-
-/**
-* quick_sort - sorts array using quicksort algorithm
-* @array: Array to sort
-* @size: Size of array to sort
-*/
-
+ * quick_sort - Function that sorts an array based on
+ * quick sort algorithm
+ * @array: Array to be sorted
+ * @size: Size of array
+ * Return: 0
+ */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL)
+	size_t pivot;
+
+	if (!array || size < 2)
 		return;
-	qs(array, 0, size - 1);
+
+	print_sort(array, size, 1);
+
+	/* partition and get pivot index */
+	pivot = partition(array, size);
+
+	/* repeat for left of index */
+	quick_sort(array, pivot);
+	/* repeat for index and right */
+	quick_sort(array + pivot, size - pivot);
+}
+
+/**
+ * swap - Function that swaps two values
+ *
+ * @a: Fisrt value
+ * @b: Second value
+ * Return: 0
+ */
+void swap(int *a, int *b)
+{
+	int tmp;
+
+	tmp = *b;
+	*b = *a;
+	*a = tmp;
+}
+
+/**
+ * partition - Function that sets the pivot for quick_sort
+ *
+ * @array: Array to partition
+ * @size: Size of array
+ * Return: (i + 1)
+ */
+size_t partition(int array[], size_t size)
+{
+	int pivot;
+	size_t i = -1;
+	size_t j;
+
+	if (!array || size < 2)
+		return (0);
+
+	pivot = array[size - 1];
+
+	for (j = 0; j < size - 1; j++)
+	{
+		if (array[j] <= pivot)
+		{
+			i++;
+			if (i != j)
+			{
+				swap(&array[i], &array[j]);
+				print_sort(array, size, 0);
+			}
+		}
+	}
+	if (i + 1 != size - 1)
+	{
+		swap(&array[i + 1], &array[size - 1]);
+		print_sort(array, size, 0);
+	}
+	return (i + 1);
+}
+
+/**
+ * print_sort - Function that prints as it should
+ * @array: Array to be printed
+ * @size: Size of array
+ * @init: Should initialize array
+ * Return: 0
+ */
+void print_sort(int array[], size_t size, int init)
+{
+	static int *p = (void *)0;
+	static size_t s;
+
+	if (!p && init)
+	{
+		p = array;
+		s = size;
+	}
+	if (!init)
+		print_array(p, s);
 }
