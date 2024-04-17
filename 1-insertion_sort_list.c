@@ -32,24 +32,24 @@ void swapem(listint_t *l, listint_t *r, listint_t **h)
 
 void insertion_sort_list(listint_t **list)
 {
-    listint_t *curr, *prev, *prev2;
+	listint_t *curr, *prev, *prev2;
 
-    if (list == NULL || *list == NULL || (*list)->next == NULL)
-        return;
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
+		return;
 
-    curr = *list;
-    while (curr != NULL)
-    {
-        while (curr->prev != NULL)
-        {
-            prev = curr->prev;
-            prev2 = prev;
-            if (prev->n > curr->n)
-                swapem(prev, curr, list);
-            else
-                break;
-            curr = prev2;
-        }
-        curr = curr->next;
-    }
+	curr = *list;
+	while (curr != NULL)
+	{
+		while (curr->prev != NULL)
+		{
+			prev = curr->prev;
+			prev2 = prev;
+			if (prev->n > curr->n)
+				swapem(prev, curr, list);
+			else
+				break;
+			curr = prev2;
+		}
+		curr = curr->next;
+	}
 }
